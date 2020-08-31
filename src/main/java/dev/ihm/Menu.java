@@ -20,55 +20,62 @@ import org.springframework.stereotype.Controller;
 
 public class Menu {
 
-    private Map<Integer, IOptionMenu> actions = new HashMap<>();
+	private Map<Integer, IOptionMenu> actions = new HashMap<>();
 
-    private String menu;
-    private Scanner scanner;
-    
-@Autowired
-    public Menu(Scanner scanner, List<IOptionMenu> optionMenus) {
-       optionMenus.sort(Comparator.comparing(IOptionMenu::getPoids));
-       
-       int index = 1;
-       for (IOptionMenu optionMenu: optionMenus) {
-    	   actions.put(index, optionMenu);
-    	   index++;
-       }
-        this.scanner = scanner;
-    }
+	private String menu;
+	private Scanner scanner;
 
-    public void afficher() {
+	public Menu(Scanner scanner, IPlatService service) {
+		actions.put(1, new OptionListerPlats(service));
+		actions.put(2, new OptionAjouterPlat(scanner, service));
+		actions.put(99, new OptionTerminer());
+		this.scanner = scanner;
+	}
 
-        boolean continuer = true;
+	@Autowired
+	public Menu(Scanner scanner, List<IOptionMenu> optionMenus) {
+		optionMenus.sort(Comparator.comparing(IOptionMenu::getPoids));
 
-        while (continuer) {
+		int index = 1;
+		for (IOptionMenu optionMenu : optionMenus) {
+			actions.put(index, optionMenu);
+			index++;
+		}
+		this.scanner = scanner;
+	}
 
-            System.out.println(getMenuTexte());
+	public void afficher() {
 
-            int choix = this.scanner.nextInt();
+		boolean continuer = true;
 
-            try {
-                this.actions.get(choix).executer();
-            } catch (PlatException e) {
-                continuer = false;
-                System.out.println(e.getMessage());
-            }
-        }
-    }
+		while (continuer) {
 
-    private String getMenuTexte() {
-        if (menu == null) {
-            StringBuilder sb = new StringBuilder();
-            sb.append("** Restaurant Console App **");
-            sb.append("\n");
-            this.actions.forEach((index, option) -> {
-                sb.append(index);
-                sb.append(". ");
-                sb.append(option.getTitre());
-                sb.append("\n");
-            });
-            this.menu = sb.toString();
-        }
-        return this.menu;
-    }
+			System.out.println(getMenuTexte());
+
+			int choix = this.scanner.nextInt();
+
+			try {
+				this.actions.get(choix).executer();
+			} catch (PlatException e) {
+				continuer = false;
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+
+	private String getMenuTexte() {
+		if (menu == null) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("** Restaurant Console App **");
+			sb.append("\n");
+			this.actions.forEach((index, option) -> {
+				sb.append(index);
+				sb.append(". ");
+				sb.append(option.getTitre());
+				sb.append("\n");
+			});
+			this.menu = sb.toString();
+		}
+		return this.menu;
+	}
 }

@@ -1,18 +1,10 @@
-/**
- * 
- */
 package dev;
-
-import java.util.Scanner;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import dev.ihm.Menu;
 
-/**
- * @author perse
- *
- */
+
 public class AppSpringXML {
 
 	public static void main(String[] args) {
