@@ -2,8 +2,15 @@ package dev.dao;
 
 import dev.entite.Plat;
 
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
+
+@Repository
+@Profile("service1")
 
 public class PlatDaoMemoire implements IPlatDao {
 
