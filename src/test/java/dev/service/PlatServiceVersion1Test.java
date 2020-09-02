@@ -1,14 +1,10 @@
 package dev.service;
 
-
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-
 import dev.dao.IPlatDao;
 import dev.exception.PlatException;
 
@@ -20,7 +16,7 @@ public class PlatServiceVersion1Test {
 	@BeforeEach
 	public void setUp() {
         
-        dao = Mockito.mock(IPlatDao.class);
+        dao = mock(IPlatDao.class);
         plat = new PlatServiceVersion1(dao);
 	}
 
