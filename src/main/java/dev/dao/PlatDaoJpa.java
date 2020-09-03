@@ -18,7 +18,7 @@ public class PlatDaoJpa implements IPlatDao {
 	private EntityManager em;
 
 	@Override
-	@Transactional
+
 	public List<Plat> listerPlats() {
 		return em.createQuery("select p from Plat p", Plat.class).getResultList();
 	}
@@ -31,6 +31,5 @@ public class PlatDaoJpa implements IPlatDao {
 		plat.setPrixEnCentimesEuros(prixPlat);
 		em.persist(plat);
 	}
-	
-	
+
 }
